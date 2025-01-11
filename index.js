@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: 'http://localhost:5173', // Allow specific origin
+    origin: '*', // Allow specific origin
     credentials: true, // Allow credentials (cookies, auth headers, etc.)
   })
 );
@@ -33,7 +33,9 @@ app.use("/api/v2",accountRoutes);
 app.use("/api/v3",transferRoutes);
 
 const PORT = process.env.PORT ;
-
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK",message:"Backend Engine is running", timestamp: new Date() });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
